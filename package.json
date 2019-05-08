@@ -6,17 +6,23 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@reactivex/rxjs": "^6.4.0",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
+    "debug": "~4.1.1",
     "express": "~4.16.0",
+    "immutable": "^4.0.0-rc.12",
     "jest": "^24.7.1",
+    "mongoose": "^5.5.2",
     "morgan": "~1.9.0",
     "rxjs": "^6.4.0",
     "supertest": "^4.0.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-import": "^2.17.2"
   }
 }
