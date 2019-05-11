@@ -1,11 +1,13 @@
-var mongoose = require('mongoose');
-var Line = require('./line.js');
+import mongoose from 'mongoose';
 
-var Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-var ClientSchema = new Schema({
+const ClientSchema = new Schema({
   info: {},
-  numbers: [{number: {type: integer, required: true}, line_id: {type: Schema.Types.ObjectId, ref: 'Line', required: true}]
+  numbers: [{
+    number: { type: Number, required: true },
+    line_id: { type: Schema.Types.ObjectId, ref: 'Line', required: true },
+  }],
 });
 
 module.exports = mongoose.model('Client', ClientSchema);

@@ -1,10 +1,11 @@
-var mongoose = require('mongoose');
-var Line = require('./line.js');
+import mongoose from 'mongoose';
 
-var Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-var AttendantSchema = new Schema({
-  lines: [{type: Schema.Types.ObjectId, ref: 'Line'}]
+const AttendantSchema = new Schema({
+  Name: String,
+  lines: [{ type: Schema.Types.ObjectId, ref: 'Line' }],
+  avg_time_attention: Number,
 });
 
 module.exports = mongoose.model('Attendant', AttendantSchema);
