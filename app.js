@@ -1,25 +1,30 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose');
+import http from 'http';
+import express from 'express';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+import logger from 'morgan';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import mongoose from 'mongoose';
+import path from 'path';
+import routes from './routes/index';
 
-var app = express();
-var mongoDB = 'mongodb://127.0.0.1/colame_db';
+const app = express();
+const mongoDB = 'mongodb://127.0.0.1/colame_db';
+const hostname = '127.0.0.1';
+const port = 3000;
+const db = mongoose.connection;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
-var db = mongoose.connection;
 
+const server = http.createServer(app);
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+routes(app);
 
-module.exports = app;
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`)
+});
