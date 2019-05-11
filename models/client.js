@@ -6,7 +6,7 @@ const ClientSchema = new Schema({
   info: {},
   numbers: [{
     number: { type: Number, required: true },
-    line_id: { type: Schema.Types.ObjectId, ref: 'Line', required: true },
+    lineId: { type: Schema.Types.ObjectId, ref: 'Line', required: true },
   }],
 });
 
