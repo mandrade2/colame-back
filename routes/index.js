@@ -12,10 +12,18 @@ export default (app) => {
   /* COMPANY */
   app.post('/company', Companies.create);
   app.get('/company', Companies.list);
+  app.put('/company/:id', Companies.update);
+  app.delete('/company/:id', Companies.destroy);
   /* LINE */
-  app.post('/line', Lines.create);
+  app.post('/company/:id/line', Lines.create);
   app.get('/line', Lines.list);
+  app.put('/line/:id', Lines.update);
+  app.delete('/line/:id', Lines.destroy);
+  app.get('/company/:id/lines', Lines.list_per_company);
   /* attendants */
-  app.post('/attendant', Attendants.create);
+  app.post('/company/:id/attendant', Attendants.create);
   app.get('/attendant', Attendants.list);
+  app.put('/attendant/:id', Attendants.update);
+  app.delete('/attendant/:id', Attendants.destroy);
+  app.get('/company/:id/attendants', Attendants.list_per_company);
 };
