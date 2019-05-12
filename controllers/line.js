@@ -36,6 +36,33 @@ class Lines {
       res.json(lines);
     });
   }
+
+  static join(req, res) {
+    Line.findById(req.params.lineId)
+      .then((line) => {
+        Client.create({ position: line.clients.length, number: line.currentNumber, lineId: req.params.lineId })
+          .then(async (client) => {
+            line.clients.push(client._id);
+            line.currentNumber += 1;
+            await line.save();
+            res.status(201).send(line);
+          })
+          .catch(error => res.status(400).send(error));
+      });
+  }
+
+  static joinAttendant(req, res) {
+    const {
+      attendantId,
+    } = req.body;
+    Line.findById(req.params.lineId)
+      .then(async (line) => {
+        line.attendants.push(attendantId);
+        await line.save();
+        res.status(201).send(line);
+      })
+      .catch(error => res.status(400).send(error));
+  }
 }
 
 export default Lines;

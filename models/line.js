@@ -4,9 +4,10 @@ const { Schema } = mongoose;
 
 const LineSchema = new Schema({
   name: String,
-  clients: [{ position: Number, number: Number, client: { type: Schema.Types.ObjectId, ref: 'Client' } }],
+  clients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
   avgTimeWaiting: { type: Number, default: 0 },
   companyId: { type: Schema.Types.ObjectId, ref: 'Company' },
+  attendants: [{ type: Schema.Types.ObjectId, ref: 'Attendant' }],
 });
 
 LineSchema.index({
