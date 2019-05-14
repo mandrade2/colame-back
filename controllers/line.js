@@ -68,6 +68,20 @@ class Lines {
       .catch(error => res.status(400).send(error))
       }
 
+  static out(req, res) {
+    Line.findById(req.params.lineId)
+      .then((line) => {
+        if(line.clients.indexOf(req.params.userId) == -1){
+          res.status(404).send();
+        }
+        else{
+          line.clients.splice(line.clients.indexOf(req.params.userId), 1);
+          line.save();
+          res.status(200).send();
+        }
+      })
+    }
+
   static joinAttendant(req, res) {
     const {
       attendantId,

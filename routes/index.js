@@ -22,6 +22,7 @@ export default (app) => {
   app.get('/company/:id/lines', Lines.list_per_company);
   app.patch('/line/:lineId', Lines.next);
   app.post('/line/:lineId', Lines.join);
+  app.patch('/line/:lineId/:userId', Lines.out)
   /* attendants */
   app.post('/company/:id/attendant', Attendants.create);
   app.get('/attendant', Attendants.list);
