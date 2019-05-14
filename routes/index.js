@@ -17,9 +17,11 @@ export default (app) => {
   /* LINE */
   app.post('/company/:id/line', Lines.create);
   app.get('/line', Lines.list);
-  app.put('/line/:id', Lines.update);
-  app.delete('/line/:id', Lines.destroy);
+  app.put('/line/:lineId', Lines.update);
+  app.delete('/line/:lineId', Lines.destroy);
   app.get('/company/:id/lines', Lines.list_per_company);
+  app.patch('/line/:lineId', Lines.next);
+  app.post('/line/:lineId', Lines.join);
   /* attendants */
   app.post('/company/:id/attendant', Attendants.create);
   app.get('/attendant', Attendants.list);

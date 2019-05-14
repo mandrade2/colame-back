@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const ClientSchema = new Schema({
-  info: {},
   position: { type: Number, required: true },
   number: { type: Number, required: true },
   lineId: { type: Schema.Types.ObjectId, ref: 'Line', required: true },
