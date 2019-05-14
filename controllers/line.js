@@ -77,6 +77,7 @@ class Lines {
         else{
           line.clients.splice(line.clients.indexOf(req.params.userId), 1);
           line.save();
+          line.currentNumber -= 1;
           res.status(200).send();
         }
       })
