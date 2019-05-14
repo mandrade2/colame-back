@@ -46,7 +46,7 @@ class Lines {
             line.clients.push(client._id);
             line.currentNumber += 1;
             await line.save();
-            res.status(201).send(line);
+            res.status(201).send({ line, client });
           })
           .catch(error => res.status(400).send(error));
       })
