@@ -8,7 +8,8 @@ const LineSchema = new Schema({
   avgTimeWaiting: { type: Number, default: 0 },
   companyId: { type: Schema.Types.ObjectId, ref: 'Company' },
   attendants: [{ type: Schema.Types.ObjectId, ref: 'Attendant' }],
-  currentNumber: { type: Number, default: 0},
+  currentNumber: { type: Number, default: 0 },
+  attending: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
 });
 
 LineSchema.index({
