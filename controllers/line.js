@@ -48,40 +48,44 @@ class Lines {
             await line.save();
             res.status(201).send(line);
           })
-          .catch(error => res.status(400).send(error))
-        })
+          .catch(error => res.status(400).send(error));
+      })
       .catch(error => res.status(400).send(error));
   }
-  static next(req, res){
+
+  static next(req, res) {
+    const {
+      clientId,
+    } = req.body;
     Line.findById(req.params.lineId)
       .then((line) => {
-        if(line.currentNumber == 0){
+        if (line.clients.length === 0) {
           res.status(204).send();
-        }
-        else{
+        } else {
+          if (line.attending.indexOf(clientId) > -1) {
+            line.attending.splice(line.clients.indexOf(clientId), 1);
+          }
           const client = line.clients.shift();
-          line.currentNumber -= 1;
+          line.attending.push(client._id);
           line.save();
           res.status(201).send(client);
         }
       })
-      .catch(error => res.status(400).send(error))
-      }
+      .catch(error => res.status(400).send(error));
+  }
 
   static out(req, res) {
     Line.findById(req.params.lineId)
       .then((line) => {
-        if(line.clients.indexOf(req.params.userId) == -1){
+        if (line.clients.indexOf(req.params.userId) === -1) {
           res.status(404).send();
-        }
-        else{
+        } else {
           line.clients.splice(line.clients.indexOf(req.params.userId), 1);
           line.save();
-          line.currentNumber -= 1;
           res.status(200).send();
         }
-      })
-    }
+      });
+  }
 
   static joinAttendant(req, res) {
     const {
