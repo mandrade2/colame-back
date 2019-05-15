@@ -62,18 +62,37 @@ class Lines {
       clientId,
     } = req.body;
     Line.findById(req.params.lineId)
-      .then((line) => {
-        if (line.clients.length === 0) {
-          res.status(204).send();
-        } else {
-          if (line.attending.indexOf(clientId) > -1) {
-            line.attending.splice(line.clients.indexOf(clientId), 1);
-          }
-          const client = line.clients.shift();
-          line.attending.push(client._id);
-          line.save();
-          res.status(201).send(client);
+      .then(async (line) => {
+        if (line.attending.indexOf(clientId) > -1) {
+          line.attending.splice(line.clients.indexOf(clientId), 1);
         }
+        await line.save();
+        if (line.clients.length === 0) {
+          res.status(204).send({ _id: null, number: null });
+        } else {
+          const client = line.clients.shift();
+          line.attending.push(client);
+          line.save();
+          Client.findById(client).then(clientModel => res.status(201).send(clientModel));
+        }
+      })
+      .catch(error => res.status(400).send(error));
+  }
+
+  static notArrived(req, res) {
+    const {
+      clientId,
+    } = req.body;
+    Line.findById(req.params.lineId)
+      .then(async (line) => {
+        if (line.attending.indexOf(clientId) > -1) {
+          line.attending.splice(line.clients.indexOf(clientId), 1);
+        }
+        line.clients.push(clientId);
+        const client = line.clients.shift();
+        line.attending.push(client);
+        await line.save();
+        Client.findById(client).then(clientModel => res.status(201).send(clientModel));
       })
       .catch(error => res.status(400).send(error));
   }
