@@ -1,10 +1,16 @@
 #!/usr/bin/env node
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('./routes/index.js');
 var debug = require('debug')('colame-back:server');
 var http = require('http');
 
@@ -58,9 +64,7 @@ function onError(error) {
     throw error;
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -83,8 +87,8 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+exports.default = server;
