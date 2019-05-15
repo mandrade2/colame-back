@@ -86,7 +86,7 @@ class Lines {
         } else {
           line.clients.splice(line.clients.indexOf(req.params.userId), 1);
           line.save();
-          res.status(200).send();
+          res.status(200).send(line);
         }
       });
   }
