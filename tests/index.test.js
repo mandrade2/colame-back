@@ -3,6 +3,7 @@ import server from '../src/server'
 
 import { getAllLines } from './line.test'
 import { getAllCompanies } from './company.test';
+import { getAllAttendants } from './attendant.test';
 
 describe('Colame Tests', () => {
 
@@ -20,6 +21,13 @@ describe('Colame Tests', () => {
         test('should get all lines from company', () => {
             return getAllCompanies(request, server)
         })
+    })
+
+    describe('Attendant Tests', () => {
+        test('should get all the Attendants', () => {
+            return getAllAttendants(request, server)
+        })
+
     })
 
     afterAll(done => {
