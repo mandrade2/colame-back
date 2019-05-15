@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", {
  * Module dependencies.
  */
 
-var app = require('./routes/index.js');
+var app = require('./app.js');
 var debug = require('debug')('colame-back:server');
 var http = require('http');
 

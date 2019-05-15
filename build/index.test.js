@@ -1,6 +1,6 @@
 'use strict';
 
-var _server = require('../src/server');
+var _server = require('./server');
 
 var _server2 = _interopRequireDefault(_server);
 

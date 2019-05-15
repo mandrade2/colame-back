@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec babel-node app.js",
+    "start": "nodemon --exec babel-node src/app.js",
     "test": "jest ./build/index.test.js --detectOpenHandles --forceExit --verbose"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
     "nodemon": "^1.19.0"
   },
   "jest": {
+    "testEnvironment": "node",
     "moduleFileExtensions": [
       "js"
     ],
