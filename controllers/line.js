@@ -38,6 +38,10 @@ class Lines {
     });
   }
 
+  static get(req, res) {
+    Line.findById(req.params.lineId).then(line => res.status(200).send(line));
+  }
+
   static join(req, res) {
     Line.findById(req.params.lineId)
       .then((line) => {

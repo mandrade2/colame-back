@@ -20,6 +20,7 @@ export default (app) => {
   app.put('/line/:lineId', Lines.update);
   app.delete('/line/:lineId', Lines.destroy);
   app.get('/company/:id/lines', Lines.list_per_company);
+  app.get('/line/:lineId', Lines.get);
   app.patch('/line/:lineId', Lines.next);
   app.post('/line/:lineId', Lines.join);
   app.patch('/line/:lineId/:userId', Lines.out)
