@@ -60,11 +60,17 @@ class Lines {
   static next(req, res) {
     const {
       clientId,
+      client,
+      time
     } = req.body;
     Line.findById(req.params.lineId)
       .then(async (line) => {
         if (line.attending.indexOf(clientId) > -1) {
           line.attending.splice(line.clients.indexOf(clientId), 1);
+        }
+        if(client){
+          line.avgTimeWaiting = (line.avgTimeWaiting*line.attended + time)/(line.attended + 1);
+          line.attended += 1;
         }
         await line.save();
         if (line.clients.length === 0) {
