@@ -17,7 +17,7 @@ export default (app) => {
   /* LINE */
   app.post('/company/:id/line', Lines.create);
   app.get('/line', Lines.list);
-  app.put('/line/:lineId', Lines.update);
+  app.patch('/line/:lineId', Lines.update);
   app.delete('/line/:lineId', Lines.destroy);
   app.get('/company/:id/lines', Lines.list_per_company);
   app.get('/line/:lineId', Lines.get);
@@ -27,9 +27,9 @@ export default (app) => {
   app.post('/line/:lineId/attendant', Lines.joinAttendant);
   app.patch('/line/:lineId/:userId', Lines.out)
   /* attendants */
-  app.post('/company/:id/attendant', Attendants.create);
+  app.post('/company/:companyId/attendant', Attendants.create);
   app.get('/attendant', Attendants.list);
-  app.put('/attendant/:id', Attendants.update);
+  app.patch('/attendant/:id', Attendants.update);
   app.delete('/attendant/:id', Attendants.destroy);
-  app.get('/company/:id/attendants', Attendants.list_per_company);
+  app.get('/company/:companyId/attendants', Attendants.list_per_company);
 };

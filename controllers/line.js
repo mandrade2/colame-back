@@ -21,13 +21,15 @@ class Lines {
     const {
       name,
     } = req.body;
-    return Line.findByIdAndUpdate(req.params.id, {$set: {name: name}})
-      .then(line => res.status(201).send(line))
+    return Line.findByIdAndUpdate(req.params.lineId, { $set: { name } })
+      .then((err, line) => {
+        res.status(201).send(line);
+      })
       .catch(error => res.status(400).send(error));
   }
 
   static destroy(req, res) {
-    return Line.findByIdAndRemove(req.params.id)
+    return Line.findByIdAndRemove(req.params.lineId)
       .then(line => res.status(201).send(line))
       .catch(error => res.status(400).send(error));
   }
