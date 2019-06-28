@@ -1,6 +1,7 @@
 import Companies from '../controllers/company';
 import Lines from '../controllers/line';
 import Attendants from '../controllers/attendant';
+import Clients from '../controllers/client';
 
 export default (app) => {
   app.get('/', (req, res) => {
@@ -32,4 +33,7 @@ export default (app) => {
   app.patch('/attendant/:id', Attendants.update);
   app.delete('/attendant/:id', Attendants.destroy);
   app.get('/company/:companyId/attendants', Attendants.list_per_company);
+  /* client*/
+  app.patch('/client/:id', Clients.imhere);
+  app.get('/client/:id', Clients.info)
 };

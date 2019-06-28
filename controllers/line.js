@@ -47,7 +47,7 @@ class Lines {
   static join(req, res) {
     Line.findById(req.params.lineId)
       .then((line) => {
-        Client.create({ position: line.clients.length, number: line.currentNumber, lineId: req.params.lineId })
+        Client.create({ position: line.clients.length, number: line.currentNumber, lineId: req.params.lineId, here: false})
           .then(async (client) => {
             line.clients.push(client._id);
             line.currentNumber += 1;
@@ -62,11 +62,17 @@ class Lines {
   static next(req, res) {
     const {
       clientId,
+      client,
+      time
     } = req.body;
     Line.findById(req.params.lineId)
       .then(async (line) => {
         if (line.attending.indexOf(clientId) > -1) {
           line.attending.splice(line.clients.indexOf(clientId), 1);
+        }
+        if(client){
+          line.avgTimeWaiting = (line.avgTimeWaiting*line.attended + time)/(line.attended + 1);
+          line.attended += 1;
         }
         await line.save();
         if (line.clients.length === 0) {
@@ -124,6 +130,20 @@ class Lines {
       })
       .catch(error => res.status(400).send(error));
   }
+  /*static moveBack(req, res){
+    Line.findById.(req.params.lineId)
+      .then((line) => {
+        Client.findById(req.params.userId)
+        .then((client) => {
+          var a = line.clients.indexOf(client._id);
+          if (line.currentNumber - a < 5){
+            line.clients.push(client._id);
+            line.clients.splice(a, 1);
+          }
+
+        }
+      })})
+  }*/
 }
 
 export default Lines;

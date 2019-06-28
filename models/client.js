@@ -6,6 +6,7 @@ const ClientSchema = new Schema({
   position: { type: Number, required: true },
   number: { type: Number, required: true },
   lineId: { type: Schema.Types.ObjectId, ref: 'Line', required: true },
+  here: { type: Boolean}
 });
 
 module.exports = mongoose.model('Client', ClientSchema);
