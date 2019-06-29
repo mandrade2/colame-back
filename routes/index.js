@@ -2,6 +2,7 @@ import Companies from '../controllers/company';
 import Lines from '../controllers/line';
 import Attendants from '../controllers/attendant';
 import Clients from '../controllers/client';
+import Times from '../controllers/time';
 
 export default (app) => {
   app.get('/', (req, res) => {
@@ -35,5 +36,8 @@ export default (app) => {
   app.get('/company/:companyId/attendants', Attendants.list_per_company);
   /* client*/
   app.patch('/client/:id', Clients.imhere);
-  app.get('/client/:id', Clients.info)
+  app.get('/client/:id', Clients.info);
+  /*time*/
+  app.post('/atttime', Times.createAttending);
+  app.post('/waittime', Times.createWaiting);
 };
