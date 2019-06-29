@@ -1,16 +1,17 @@
 import Client from '../models/client';
 
-class Clients{
-  static info(req, res){
-    Client.findById(req.params.id)
-    .then((user) =>{
-      res.json(user)
-    })
-  }
-  static imhere(req, res){
+class Clients {
+  static info(req, res) {
     Client.findById(req.params.id)
       .then((user) => {
-        switch(user.here) {
+        res.json(user);
+      });
+  }
+
+  static imhere(req, res) {
+    Client.findById(req.params.id)
+      .then((user) => {
+        switch (user.here) {
           case true:
             user.here = false;
             break;
@@ -23,7 +24,6 @@ class Clients{
       })
       .catch(error => res.status(400).send(error));
   }
-  
 }
 
 export default Clients;
