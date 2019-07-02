@@ -40,4 +40,7 @@ export default (app) => {
   /*time*/
   app.post('/atttime', Times.createAttending);
   app.post('/waittime', Times.createWaiting);
+  app.get('/line/:id/waitinfo', Times.lineInfoWaitingByDate);
+  app.get('/line/:id/attinfo', Times.lineInfoAttendingByDate);
+  app.get('/attendant/:id/info', Times.attendantInfoByDate);
 };
