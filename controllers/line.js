@@ -44,6 +44,22 @@ class Lines {
     Line.findById(req.params.lineId).then(line => res.status(200).send(line));
   }
 
+  static position(req, res) {
+    const pos = req.params.position;
+    function posChange(c) {
+      Line.findById(req.params.lineId).then(line => {
+        var position = line.clients.indexOf(req.params.clientId);
+        if(pos == position && c >= 0){
+          return setTimeout(function() { posChange(c - 1) }, 1000);
+        } else {
+          res.status(200).json(position);
+        }
+      });
+    }
+    posChange(10);
+  }
+
+
   static join(req, res) {
     Line.findById(req.params.lineId)
       .then((line) => {

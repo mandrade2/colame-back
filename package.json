@@ -21,7 +21,8 @@
     "morgan": "~1.9.0",
     "rxjs": "^6.4.0",
     "socketio": "^1.0.0",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "vue-qrcode-reader": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
