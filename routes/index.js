@@ -49,7 +49,7 @@ export default (app) => {
   app.get('/attendant/:id/info', Times.attendantInfoByDate);
   /* login */
   app.post('/assistant/login', async (req, res, next) => {
-    passport.authenticate('assistantLogin', async (err, user) => {
+    passport.authenticate('attendantLogin', async (err, user) => {
       try {
         if (err || !user) {
           res.status(401);
@@ -67,7 +67,7 @@ export default (app) => {
             data: {
               jwt: token,
             },
-            message: 'Assistant Authentication Succesful',
+            message: 'Attendant Authentication Succesful',
           });
         });
       } catch (error) {
