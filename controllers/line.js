@@ -67,7 +67,8 @@ class Lines {
           .then(async (client) => {
             line.clients.push(client._id);
             line.currentNumber += 1;
-            await line.save();
+            const newline = await line.save().then(linea => linea);
+            console.log(line);
             res.status(201).send({ line, client });
           })
           .catch(error => res.status(400).send(error));
