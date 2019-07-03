@@ -35,20 +35,7 @@ export default (app) => {
   /* attendants */
   app.post('/company/:companyId/attendant', Attendants.create);
   app.get('/attendant', Attendants.list);
-  app.patch('/attendant/:id', Attendants.update);
-  app.delete('/attendant/:id', Attendants.destroy);
-  app.get('/company/:companyId/attendants', Attendants.list_per_company);
-  /* client */
-  app.patch('/client/:id', Clients.imhere);
-  app.get('/client/:id', Clients.info);
-  /* time */
-  app.post('/atttime', Times.createAttending);
-  app.post('/waittime', Times.createWaiting);
-  app.get('/line/:id/waitinfo', Times.lineInfoWaitingByDate);
-  app.get('/line/:id/attinfo', Times.lineInfoAttendingByDate);
-  app.get('/attendant/:id/info', Times.attendantInfoByDate);
-  /* login */
-  app.post('/assistant/login', async (req, res, next) => {
+  app.post('/attendant/login', async (req, res, next) => {
     passport.authenticate('attendantLogin', async (err, user) => {
       try {
         if (err || !user) {
@@ -76,6 +63,19 @@ export default (app) => {
       }
     })(req, res, next);
   });
+  app.patch('/attendant/:id', Attendants.update);
+  app.delete('/attendant/:id', Attendants.destroy);
+  app.get('/company/:companyId/attendants', Attendants.list_per_company);
+  /* client */
+  app.patch('/client/:id', Clients.imhere);
+  app.get('/client/:id', Clients.info);
+  /* time */
+  app.post('/atttime', Times.createAttending);
+  app.post('/waittime', Times.createWaiting);
+  app.get('/line/:id/waitinfo', Times.lineInfoWaitingByDate);
+  app.get('/line/:id/attinfo', Times.lineInfoAttendingByDate);
+  app.get('/attendant/:id/info', Times.attendantInfoByDate);
+  /* login */
   app.post('/company/login', async (req, res, next) => {
     passport.authenticate('companyLogin', async (err, user) => {
       try {

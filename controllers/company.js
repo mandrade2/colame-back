@@ -9,7 +9,7 @@ class Companies {
       username,
       plainpassword,
     } = req.body;
-    const hashedpwd = await bcrypt.hash(plainpassword, 10);
+    const hashedpwd = await bcrypt.hashSync(plainpassword, 10).then(hash => hash);
     return Company.create({
       name,
       description,
@@ -26,15 +26,20 @@ class Companies {
     });
   }
 
-  static update(req, res) {
+  static async update(req, res) {
     const {
       name,
       description,
+      username,
+      plainpassword,
     } = req.body;
+    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
     return Company.findByIdAndUpdate(req.params.id, {
       $set: {
         name,
         description,
+        username,
+        password: hashedpwd,
       },
     })
       .then(company => res.status(201).send(company))

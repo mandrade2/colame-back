@@ -6,13 +6,13 @@ const {
 
 const CompanySchema = new Schema({
   name: {
-    username: String,
-    password: String,
     type: String,
     required: [true, 'Se requiere el nombre de la empresa'],
     unique: true,
     dropDups: true,
   },
+  username: String,
+  password: String,
   description: String,
   attendants: [{
     type: Schema.Types.ObjectId,

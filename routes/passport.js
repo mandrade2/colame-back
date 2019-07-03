@@ -22,14 +22,14 @@ passport.use(
   async (username, password, next) => {
     const user = await Attendant.find({
       username,
-    });
+    }).then(newUser => newUser[0]);
 
     if (!user) {
       return next(null, false, {
         message: 'there was no user',
       });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password).then(match => match);
 
     if (!isMatch) {
       return next(null, false, {
@@ -49,14 +49,14 @@ passport.use(
   async (username, password, next) => {
     const user = await Company.find({
       username,
-    });
+    }).then(newCompany => newCompany[0]);
 
     if (!user) {
       return next(null, false, {
         message: 'there was no user',
       });
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password).then(match => match);
 
     if (!isMatch) {
       return next(null, false, {

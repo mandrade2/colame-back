@@ -8,7 +8,7 @@ class Attendants {
       username,
       plainpassword,
     } = req.body;
-    const hashedpwd = await bcrypt.hash(plainpassword, 10);
+    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
     return Attendant.create({
       name,
       username,
@@ -25,13 +25,18 @@ class Attendants {
     });
   }
 
-  static update(req, res) {
+  static async update(req, res) {
     const {
       name,
+      username,
+      plainpassword,
     } = req.body;
+    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
     return Attendant.findByIdAndUpdate(req.params.id, {
       $set: {
         name,
+        username,
+        password: hashedpwd,
       },
     })
       .then(attendant => res.status(201).send(attendant))
