@@ -13,7 +13,7 @@ class Attendants {
       name,
       username,
       password: hashedpwd,
-      companyId: req.params.id,
+      companyId: req.params.companyId,
     })
       .then(attendant => res.status(201).send(attendant))
       .catch(error => res.status(400).send(error));
@@ -29,14 +29,11 @@ class Attendants {
     const {
       name,
       username,
-      plainpassword,
     } = req.body;
-    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
     return Attendant.findByIdAndUpdate(req.params.id, {
       $set: {
         name,
         username,
-        password: hashedpwd,
       },
     })
       .then(attendant => res.status(201).send(attendant))

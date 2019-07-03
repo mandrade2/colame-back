@@ -21,7 +21,7 @@ export default (app) => {
   /* LINE */
   app.post('/company/:id/line', Lines.create);
   app.get('/line', Lines.list);
-  app.patch('/line/:lineId', Lines.update);
+  app.put('/line/:lineId', Lines.update);
   app.delete('/line/:lineId', Lines.destroy);
   app.get('/company/:id/lines', Lines.list_per_company);
   app.get('/line/:lineId', Lines.get);
@@ -53,6 +53,7 @@ export default (app) => {
           return res.json({
             data: {
               jwt: token,
+              user,
             },
             message: 'Attendant Authentication Succesful',
           });
@@ -94,6 +95,7 @@ export default (app) => {
           return res.json({
             data: {
               jwt: token,
+              user,
             },
             message: 'Company Authentication Succesful',
           });
