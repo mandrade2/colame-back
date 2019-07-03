@@ -52,7 +52,7 @@ class Lines {
         if(pos == position && c >= 0){
           return setTimeout(function() { posChange(c - 1) }, 1000);
         } else {
-          res.status(200).json(position);
+          res.status(200).send(line);
         }
       });
     }
