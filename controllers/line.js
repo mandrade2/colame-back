@@ -149,27 +149,27 @@ class Lines {
   }
 
   static moveBack(req, res) {
-    Line.findById(req.params.lineId)
-      .then(async (line) => {
-        Client.findById(req.params.userId)
-        .then((client) => {
-          var a = line.clients.indexOf(client._id);
-          if (line.attended == 0 || line.seconds == 0 || line.clients.length <= Math.floor(line.seconds / line.attended)){
-            line.clients.push(client._id);
-            line.clients.splice(a, 1);
-          }else{
-            const puestos = Math.floor(seconds / line.attended);
-            const cambio = client._id;
-            line.clients.splice(a, 1);
-            line.clients.splice(a, 0, client._id);
-          }
-            line.save();
-            res.status(201).send(line);
+  Line.findById(req.params.lineId)
+    .then(async (line) => {
+      Client.findById(req.params.userId)
+      .then((client) => {
+        var a = line.clients.indexOf(client._id);
+        if (line.attended == 0 || line.seconds == 0 || line.clients.length <= Math.floor(6000/(line.seconds / line.attended))){
+          line.clients.push(client._id);
+          line.clients.splice(a, 1);
+        }else{
+          const puestos = Math.floor(6000/(seconds / line.attended));
+          const cambio = client._id;
+          line.clients.splice(a, 1);
+          line.clients.splice(a, 0, client._id);
         }
-      ).catch(error => res.status(400).send(error))
-    })
-    .catch(error => res.status(400).send(error));
-  }
+          line.save();
+          res.status(201).send(line);
+      }
+    ).catch(error => res.status(400).send(error))
+  })
+  .catch(error => res.status(400).send(error));
+}
 }
 
 export default Lines;
