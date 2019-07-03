@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 
-const { Schema } = mongoose;
+const {
+  Schema
+} = mongoose;
 
 const CompanySchema = new Schema({
   name: {
@@ -9,9 +11,17 @@ const CompanySchema = new Schema({
     unique: true,
     dropDups: true,
   },
+  username: String,
+  password: String,
   description: String,
-  attendants: [{ type: Schema.Types.ObjectId, ref: 'Attendant' }],
-  lines: [{ type: Schema.Types.ObjectId, ref: 'Line' }],
+  attendants: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Attendant'
+  }],
+  lines: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Line'
+  }],
 });
 
 module.exports = mongoose.model('Company', CompanySchema);

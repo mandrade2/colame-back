@@ -1,11 +1,20 @@
+import bcrypt from 'bcrypt';
 import Attendant from '../models/attendant';
 
 class Attendants {
-  static create(req, res) {
+  static async create(req, res) {
     const {
       name,
+      username,
+      plainpassword,
     } = req.body;
-    return Attendant.create({ name: name, companyId: req.params.id })
+    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
+    return Attendant.create({
+      name,
+      username,
+      password: hashedpwd,
+      companyId: req.params.id,
+    })
       .then(attendant => res.status(201).send(attendant))
       .catch(error => res.status(400).send(error));
   }
@@ -16,11 +25,20 @@ class Attendants {
     });
   }
 
-  static update(req, res) {
+  static async update(req, res) {
     const {
       name,
+      username,
+      plainpassword,
     } = req.body;
-    return Attendant.findByIdAndUpdate(req.params.id, {$set: {name: name}})
+    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
+    return Attendant.findByIdAndUpdate(req.params.id, {
+      $set: {
+        name,
+        username,
+        password: hashedpwd,
+      },
+    })
       .then(attendant => res.status(201).send(attendant))
       .catch(error => res.status(400).send(error));
   }
@@ -32,7 +50,9 @@ class Attendants {
   }
 
   static list_per_company(req, res) {
-    Attendant.find({companyId: req.params.id}).then((attendants) => {
+    Attendant.find({
+      companyId: req.params.id,
+    }).then((attendants) => {
       res.json(attendants);
     });
   }
