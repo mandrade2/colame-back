@@ -48,7 +48,7 @@ class Attendants {
 
   static list_per_company(req, res) {
     Attendant.find({
-      companyId: req.params.id,
+      companyId: req.params.companyId,
     }).then((attendants) => {
       res.json(attendants);
     });
