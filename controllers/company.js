@@ -9,7 +9,7 @@ class Companies {
       username,
       plainpassword,
     } = req.body;
-    const hashedpwd = await bcrypt.hashSync(plainpassword, 10).then(hash => hash);
+    const hashedpwd = await bcrypt.hash(plainpassword, 10).then(hash => hash);
     return Company.create({
       name,
       description,
