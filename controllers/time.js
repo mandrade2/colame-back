@@ -1,5 +1,6 @@
 import AttendingTime from '../models/attendingtime';
 import WaitingTime from '../models/waitingtime';
+import Line from '../models/line';
 
 function randomDate(start, end) {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -48,6 +49,7 @@ class Times {
       attendants,
       lineId,
     } = req.body;
+    Line.findByIdAndUpdate(req.params.lineId, { $inc: { seconds, attended: 1 } }).then();
     return WaitingTime.create({ date, seconds, clientId, attendants, lineId })
       .then(waitingtime => res.status(201).send(waitingtime))
       .catch(error => res.status(400).send(error));
@@ -74,6 +76,7 @@ class Times {
     const obj = {
       seconds, attendants, clientId, lineId, date,
     };
+    Line.findByIdAndUpdate(lineId, { $inc: { seconds, attended: 1 } }).then();
     return WaitingTime.create(obj)
       .then(waitingtime => res.status(201).send(waitingtime))
       .catch(error => res.status(400).send(error));
