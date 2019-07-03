@@ -1,12 +1,21 @@
+import bcrypt from 'bcrypt';
 import Company from '../models/company';
 
 class Companies {
-  static create(req, res) {
+  static async create(req, res) {
     const {
       name,
       description,
+      username,
+      plainpassword,
     } = req.body;
-    return Company.create({ name, description })
+    const hashedpwd = await bcrypt.hash(plainpassword, 10);
+    return Company.create({
+      name,
+      description,
+      username,
+      password: hashedpwd,
+    })
       .then(company => res.status(201).send(company))
       .catch(error => res.status(400).send(error));
   }
@@ -22,7 +31,12 @@ class Companies {
       name,
       description,
     } = req.body;
-    return Company.findByIdAndUpdate(req.params.id, {$set: {name: name, description: description}})
+    return Company.findByIdAndUpdate(req.params.id, {
+      $set: {
+        name,
+        description,
+      },
+    })
       .then(company => res.status(201).send(company))
       .catch(error => res.status(400).send(error));
   }
