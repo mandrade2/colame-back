@@ -1,8 +1,10 @@
+import * as jwt from 'jsonwebtoken';
 import Companies from '../controllers/company';
 import Lines from '../controllers/line';
 import Attendants from '../controllers/attendant';
 import Clients from '../controllers/client';
 import Times from '../controllers/time';
+import passport from './passport';
 
 export default (app) => {
   app.get('/', (req, res) => {
@@ -27,22 +29,79 @@ export default (app) => {
   app.patch('/line/:lineId/notArrived', Lines.notArrived);
   app.post('/line/:lineId', Lines.join);
   app.post('/line/:lineId/attendant', Lines.joinAttendant);
-  app.patch('/line/:lineId/:userId', Lines.out)
+  app.patch('/line/:lineId/:userId', Lines.out);
   app.get('/line/:lineId/position/:clientId/:position', Lines.position);
-  app.patch('/line/:lineId/:userId/moveBack', Lines.moveBack)
+  app.patch('/line/:lineId/:userId/moveBack', Lines.moveBack);
   /* attendants */
   app.post('/company/:companyId/attendant', Attendants.create);
   app.get('/attendant', Attendants.list);
   app.patch('/attendant/:id', Attendants.update);
   app.delete('/attendant/:id', Attendants.destroy);
   app.get('/company/:companyId/attendants', Attendants.list_per_company);
-  /* client*/
+  /* client */
   app.patch('/client/:id', Clients.imhere);
   app.get('/client/:id', Clients.info);
-  /*time*/
+  /* time */
   app.post('/atttime', Times.createAttending);
   app.post('/waittime', Times.createWaiting);
   app.get('/line/:id/waitinfo', Times.lineInfoWaitingByDate);
   app.get('/line/:id/attinfo', Times.lineInfoAttendingByDate);
   app.get('/attendant/:id/info', Times.attendantInfoByDate);
+  /* login */
+  app.post('/assistant/login', async (req, res, next) => {
+    passport.authenticate('assistantLogin', async (err, user) => {
+      try {
+        if (err || !user) {
+          res.status(401);
+          return res.send({ message: 'There was an error loging in' });
+        }
+        req.login(user, { session: false }, async (error) => {
+          if (error) {
+            return next(error);
+          }
+          const body = { _id: user.id, email: user.username };
+
+          const token = jwt.sign({ user: body }, 'secret');
+
+          return res.json({
+            data: {
+              jwt: token,
+            },
+            message: 'Assistant Authentication Succesful',
+          });
+        });
+      } catch (error) {
+        console.log(error);
+        return next(error);
+      }
+    })(req, res, next);
+  });
+  app.post('/company/login', async (req, res, next) => {
+    passport.authenticate('companyLogin', async (err, user) => {
+      try {
+        if (err || !user) {
+          res.status(401);
+          return res.send({ message: 'There was an error loging in' });
+        }
+        req.login(user, { session: false }, async (error) => {
+          if (error) {
+            return next(error);
+          }
+          const body = { _id: user.id, email: user.username };
+
+          const token = jwt.sign({ user: body }, 'secret');
+
+          return res.json({
+            data: {
+              jwt: token,
+            },
+            message: 'Company Authentication Succesful',
+          });
+        });
+      } catch (error) {
+        console.log(error);
+        return next(error);
+      }
+    })(req, res, next);
+  });
 };
