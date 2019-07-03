@@ -7,7 +7,6 @@ class Clients {
         res.json(user);
       });
   }
-
   static imhere(req, res) {
     Client.findById(req.params.id)
       .then((user) => {
