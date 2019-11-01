@@ -16,7 +16,7 @@
     "http": "0.0.0",
     "jest": "^24.7.1",
     "mongodb": "^3.2.4",
-    "mongoose": "^5.5.7",
+    "mongoose": "^5.7.5",
     "mongoose-migrate-2": "^0.2.5",
     "mongoose-seed": "^0.6.0",
     "morgan": "~1.9.0",
